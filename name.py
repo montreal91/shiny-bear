@@ -1,5 +1,6 @@
 class AName( object ):
     """docstring for AName"""
+    __slots__ = ( "__first_name", "__second_name", "__last_name" )
     def __init__( self, first_name="Guy", second_name="Ronald", last_name="Fawkes" ):
         super( AName, self ).__init__()
         self.__first_name   = first_name

@@ -2,6 +2,7 @@ from random import gauss, randint
 
 class ASkill( object ):
     """docstring for ASkill"""
+    __slots__ = ( "__talent", "__actual", "__maximum")
     def __init__( self ):
         super( ASkill, self ).__init__()
         self.__talent   = round( gauss( 2, 1 ) )
