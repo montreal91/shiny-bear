@@ -6,7 +6,7 @@ class ADivision( object ):
         super( ADivision, self ).__init__()
         self.__identifier   = identifier
         self.__commander    = None
-        self.__soldiers     = []
+        self.__soldiers     = {}
 
         # Equipment
         self.__armours      = 0
@@ -86,7 +86,7 @@ class ADivision( object ):
 
     def __DefineDiscipline( self ):
         dis = 0
-        for soldier in self.__soldiers:
+        for soldier in self.__soldiers.itervalues():
             dis += soldier.discipline.actual
         if self.__commander is not None:
             dis = float( dis + self.__commander.discipline.actual ) / ( self.soldiers + 1 )
@@ -96,7 +96,7 @@ class ADivision( object ):
 
     def __DefineArmours( self ):
         armours = 0
-        for soldier in self.__soldiers:
+        for soldier in self.__soldiers.itervalues():
             armours += soldier.armour 
         if self.__commander is not None:
             armours = float( armours + self.__commander.armour ) / ( self.soldiers +1 )
@@ -106,7 +106,7 @@ class ADivision( object ):
 
     def __DefineWeapons( self ):
         weapons = 0
-        for soldier in self.__soldiers:
+        for soldier in self.__soldiers.itervalues():
             weapons += soldier.weapon
         if self.__commander is not None:
             weapons = float( weapons + self.__commander.weapon ) / ( self.soldiers + 1 )
@@ -138,29 +138,20 @@ class ADivision( object ):
 
     def AddOneSoldier( self, new_soldier ):
         assert type( new_soldier ) == AHuman
-        self.__soldiers.append( new_soldier )
+        self.__soldiers[ new_soldier.identifier ] = new_soldier
         self.__UpdateAllAttributes()
 
     def AddManySoldiers( self, new_soldiers ):
         for soldier in new_soldiers:
             assert type( soldier ) == AHuman
-            self.__soldiers.append( soldier )
+            self.__soldiers[ soldier.identifier ] = soldier
         self.__UpdateAllAttributes()
 
     def RemoveOneSoldier( self, soldier_id ):
-        pos = None
-        for soldier in self.__soldiers:
-            if soldier.identifier == soldier_id:
-                pos = self.__soldiers.index( soldier )
-        if pos is None:
-            return None
-        else:
-            soldier = self.__soldiers.pop( pos )
-            self.__UpdateAllAttributes()
-            return soldier
+        return self.__soldiers.pop( soldier_id )
 
     def RemoveAllSoldiers( self ):
-        soldiers = self.__soldiers
-        self.__soldiers = []
+        soldiers = list( self.__soldiers.itervalues() )
+        self.__soldiers = {}
         self.__UpdateAllAttributes()
         return soldiers
