@@ -67,24 +67,39 @@ class ADivision( object ):
         return self.__logistics
 
     def __DefineMaxSoldiers( self ):
-        self.__max_soldiers = self.__commander.leadership * 5
+        if self.__commander is None:
+            self.__max_soldiers = 0
+        else:
+            self.__max_soldiers = self.__commander.leadership.actual * 5
 
     def __DefineDisPenalty( self ):
         if self.__max_soldiers == 0 or self.soldiers < self.__max_soldiers:
-            return 0
+            self.__dis_penalty = 0
         else:
-            res = len( self.__soldiers ) / float( max_soldiers )
+            self.__dis_penalty = len( self.__soldiers ) / float( self.__max_soldiers )
 
     def __DefineAttack( self ):
-        self.__attack = self.__commander.attack.actual
+        if self.__commander is None:
+            self.__attack = 0
+        else:
+            self.__attack = self.__commander.attack.actual
 
     def __DefineDefence( self ):
-        self.__defence = self.__commander.defence.actual
+        if self.__commander is None:
+            self.__defence = 0
+        else:
+            self.__defence = self.__commander.defence.actual
 
     def __DefineLogistics( self ):
-        self.__logistics = self.__commander.logistics.actual
+        if self.__commander is None:
+            self.__logistics = 0
+        else:
+            self.__logistics = self.__commander.logistics.actual
 
     def __DefineDiscipline( self ):
+        if self.__commander is None:
+            self.__discipline = 0
+            return
         dis = 0
         for soldier in self.__soldiers.itervalues():
             dis += soldier.discipline.actual
@@ -92,25 +107,33 @@ class ADivision( object ):
             dis = float( dis + self.__commander.discipline.actual ) / ( self.soldiers + 1 )
         else:
             dis = float( dis ) / self.soldiers
-        return round( dis, 2 ) - self.dis_penalty
+        self.__discipline = round( dis, 2 ) - self.dis_penalty
 
     def __DefineArmours( self ):
+        if self.soldiers == 0 and self.__commander is None:
+            self.__armours = 0
+            return
         armours = 0
         for soldier in self.__soldiers.itervalues():
             armours += soldier.armour 
         if self.__commander is not None:
-            armours = float( armours + self.__commander.armour ) / ( self.soldiers +1 )
+            armours = float( armours + self.__commander.armour ) / ( self.soldiers + 1 )
         else:
             armours = float( armours ) / self.soldiers
-        return round( armours, 2 )
+        self.__armours = round( armours, 2 )
 
     def __DefineWeapons( self ):
+        if self.soldiers == 0 and self.__commander is None:
+            self.__weapons = 0
+            return
         weapons = 0
         for soldier in self.__soldiers.itervalues():
             weapons += soldier.weapon
         if self.__commander is not None:
             weapons = float( weapons + self.__commander.weapon ) / ( self.soldiers + 1 )
-        return round( weapons, 2 )
+        else:
+            weapons = float( weapons ) / self.soldiers
+        self.__weapons = round( weapons, 2 )
 
     def __UpdateAllAttributes( self ):
         self.__DefineWeapons()
@@ -118,12 +141,12 @@ class ADivision( object ):
 
         self.__DefineMaxSoldiers()
 
+        self.__DefineDisPenalty()
         self.__DefineDiscipline()
         self.__DefineAttack()
         self.__DefineDefence()
         self.__DefineLogistics()
 
-        self.__DefineDisPenalty()
 
     def SetCommander( self, new_commander ):
         assert type( new_commander ) == AHuman
@@ -148,10 +171,12 @@ class ADivision( object ):
         self.__UpdateAllAttributes()
 
     def RemoveOneSoldier( self, soldier_id ):
-        return self.__soldiers.pop( soldier_id )
+        ex_soldier = self.__soldiers.pop( soldier_id )
+        self.__UpdateAllAttributes()
+        return ex_soldier
 
     def RemoveAllSoldiers( self ):
-        soldiers = list( self.__soldiers.itervalues() )
+        ex_soldiers = list( self.__soldiers.itervalues() )
         self.__soldiers = {}
         self.__UpdateAllAttributes()
-        return soldiers
+        return ex_soldiers
