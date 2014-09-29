@@ -43,7 +43,7 @@ class AnArmy( object ):
 
     @property 
     def commander( self ):
-        return None
+        return self.__commander
 
     @property 
     def strength( self ):
@@ -94,26 +94,36 @@ class AnArmy( object ):
         self.__strength     = strength
 
     def __DefineWeapons( self ):
-        weapons         = 0
-        for division in self.__divisions.itervalues():
-            weapons += division.weapons
-        if self.__commander is not None:
-            weapons += self.__commander.weapon
-            self.__weapons = weapons / ( self.divisions + 1 )
+        if self.divisions != 0:
+            weapons = 0
+            for division in self.__divisions.itervalues():
+                weapons += division.weapons
+            if self.__commander is not None:
+                weapons += self.__commander.weapon
+                weapons /= (self.divisions + 1)
+            else:
+                weapons /= self.divisions
+            self.__weapons = round( weapons, 2 )
+        elif self.__commander is not None:
+            self.__weapons = self.__commander.weapon
         else:
-            self.__weapons = weapons / self.divisions
-        self.__weapons  = round( self.__weapons, 2 )
+            self.__weapons = 0
 
     def __DefineArmours( self ):
-        armours         = 0
-        for division in self.__divisions.itervalues():
-            armours += division.armours
-        if self.__commander is not None:
-            armours += self.__commander.armour
-            self.__armours = weapons / ( self.divisions + 1 )
+        if self.divisions != 0:
+            armours = 0
+            for division in self.__divisions.itervalues():
+                armours += division.armours
+            if self.__commander is not None:
+                armours += self.__commander.armour
+                armours /= (self.divisions + 1)
+            else:
+                armours /= self.divisions
+            self.__armours = round( armours, 2 )
+        elif self.__commander is not None:
+            self.__armours = self.__commander.armour
         else:
-            self.__armours = armours / self.divisions
-        self.__armours  = round( self.__armours, 2 )
+            self.__armours = 0
 
     def __DefineMaxDivisions( self ):
         if self.__commander is not None:
@@ -128,50 +138,60 @@ class AnArmy( object ):
             self.__dis_penalty = self.divisions - self.__max_divisions
 
     def __DefineDiscipline( self ):
-        discipline = 0
-        for division in self.__divisions.itervalues():
-            discipline += division.discipline
-        discipline = discipline / self.divisions
-        if self.__commander is not None:
-            discipline          = discipline * self.__commander.discipline.actual - self.__dis_penalty # add or multiply that's the question
-            self.__discipline   = round( discipline, 2 )
+        if self.__commander is None:
+            self.__discipline = 0 #???
+        elif self.divisions == 0:
+            self.__discipline = self.__commander.discipline.actual # ???
         else:
-            self.__discipline = 0 # ???
+            discipline = 0
+            for division in self.__divisions.itervalues():
+                discipline += division.discipline
+            discipline /= self.divisions
+            discipline = discipline * self.__commander.discipline.actual - self.__dis_penalty #???
+            self.__discipline = round( discipline, 2)
 
     def __DefineAttack( self ):
-        attack = 0
-        for division in self.__divisions.itervalues():
-            attack += division.attack
-        attack = attack / self.divisions
-        if self.__commander is not None:
-            attack          = attack * self.__commander.attack.actual #???
-            self.__attack   = round( attack, 2 )
-        else:
+        if self.__commander is None:
             self.__attack = 0
+        elif self.divisions == 0:
+            self.__attack = self.__commander.attack.actual
+        else:
+            attack = 0
+            for division in self.__divisions.itervalues():
+                attack += division.attack
+            attack /= self.divisions
+            attack = attack * self.__commander.attack.actual #???
+            self.__attack = round(attack, 2)
 
     def __DefineDefence( self ):
-        defence = 0
-        for division in self.__divisions.itervalues():
-            defence += division.defence
-        defence = defence / self.divisions
-        if self.__commander is not None:
-            defence         = defence * self.__commander.defence.actual #???
-            self.__defence  = round( defence, 2 )
-        else:
+        if self.__commander is None:
             self.__defence = 0
+        elif self.divisions == 0:
+            self.__defence = self.__commander.defence.actual
+        else:
+            defence = 0
+            for division in self.__divisions.itervalues():
+                defence += division.defence
+            defence /= self.divisions
+            defence = defence * self.__commander.defence.actual #???
+            self.__defence = round(defence, 2)
 
     def __DefineLogistics( self ):
-        logistics = 0
-        for division in self.__divisions.itervalues():
-            logistics += division.logistics
-        logistics = logistics / self.divisions
-        if self.__commander is not None:
-            logistics           = logistics * self.__commander.logistics.actual #???
-            self.__logistics    = round( logistics, 2 )
-        else:
+        if self.__commander is None:
             self.__logistics = 0
+        elif self.divisions == 0:
+            self.__logistics = self.__commander.logistics.actual
+        else:
+            logistics = 0
+            for division in self.__divisions.itervalues():
+                logistics += division.logistics
+            logistics /= self.divisions
+            logistics = logistics * self.__commander.logistics.actual #???
+            self.__logistics = round(logistics, 2)
 
     def __UpdateAllAttributes( self ):
+        self.__DefineStrength()
+
         # Equipment
         self.__DefineWeapons()
         self.__DefineArmours()
@@ -199,12 +219,13 @@ class AnArmy( object ):
 
     def AddDivision( self, new_division ):
         assert type( new_division ) == ADivision
-        self.__divisions[new_division.identifier] = new_division
-        sefl.__UpdateAllAttributes()
+        assert new_division.identifier not in self.__divisions
+        self.__divisions[ new_division.identifier ] = new_division
+        self.__UpdateAllAttributes()
 
     def RemoveDivision( self, ex_div_id ):
         ex_division = self.__divisions.pop( ex_div_id )
-        sefl.__UpdateAllAttributes()
+        self.__UpdateAllAttributes()
         return ex_division
 
     def MoveToPosition( self, position ):
