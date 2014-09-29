@@ -3,6 +3,14 @@ from division   import ADivision
 
 class AnArmy( object ):
     """docstring for AnArmy"""
+    __slots__ = (
+        "__identifier",
+        "__commander", "__divisions",
+        "__strength",
+        "__weapons", "__armours",
+        "__max_divisions", "__discipline", "__attack", "__defence", "__logistics",
+        "__dis_penalty", "__geo_position",
+    )
     def __init__( self, identifier=0 ):
         super( AnArmy, self ).__init__()
         self.__identifier       = identifier
