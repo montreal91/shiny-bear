@@ -1,3 +1,4 @@
+from __future__ import division
 from human      import AHuman
 from division   import ADivision
 
@@ -98,9 +99,9 @@ class AnArmy( object ):
             weapons += division.weapons
         if self.__commander is not None:
             weapons += self.__commander.weapon
-            self.__weapons = float( weapons ) / ( self.divisions + 1 )
+            self.__weapons = weapons / ( self.divisions + 1 )
         else:
-            self.__weapons = float( weapons ) / self.divisions
+            self.__weapons = weapons / self.divisions
         self.__weapons  = round( self.__weapons, 2 )
 
     def __DefineArmours( self ):
@@ -109,9 +110,9 @@ class AnArmy( object ):
             armours += division.armours
         if self.__commander is not None:
             armours += self.__commander.armour
-            self.__armours = float( weapons ) / ( self.divisions + 1 )
+            self.__armours = weapons / ( self.divisions + 1 )
         else:
-            self.__armours = float( armours ) / self.divisions
+            self.__armours = armours / self.divisions
         self.__armours  = round( self.__armours, 2 )
 
     def __DefineMaxDivisions( self ):
@@ -130,7 +131,7 @@ class AnArmy( object ):
         discipline = 0
         for division in self.__divisions.itervalues():
             discipline += division.discipline
-        discipline = float( discipline ) / self.divisions
+        discipline = discipline / self.divisions
         if self.__commander is not None:
             discipline          = discipline * self.__commander.discipline.actual - self.__dis_penalty # add or multiply that's the question
             self.__discipline   = round( discipline, 2 )
@@ -141,7 +142,7 @@ class AnArmy( object ):
         attack = 0
         for division in self.__divisions.itervalues():
             attack += division.attack
-        attack = float( attack ) / self.divisions
+        attack = attack / self.divisions
         if self.__commander is not None:
             attack          = attack * self.__commander.attack.actual #???
             self.__attack   = round( attack, 2 )
@@ -152,7 +153,7 @@ class AnArmy( object ):
         defence = 0
         for division in self.__divisions.itervalues():
             defence += division.defence
-        defence = float( defence ) / self.divisions
+        defence = defence / self.divisions
         if self.__commander is not None:
             defence         = defence * self.__commander.defence.actual #???
             self.__defence  = round( defence, 2 )
@@ -163,7 +164,7 @@ class AnArmy( object ):
         logistics = 0
         for division in self.__divisions.itervalues():
             logistics += division.logistics
-        logistics = float( logistics ) / self.divisions
+        logistics = logistics / self.divisions
         if self.__commander is not None:
             logistics           = logistics * self.__commander.logistics.actual #???
             self.__logistics    = round( logistics, 2 )

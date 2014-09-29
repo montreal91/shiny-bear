@@ -1,4 +1,5 @@
-from human import AHuman
+from __future__ import division
+from human      import AHuman
 
 class ADivision( object ):
     """docstring for ADivision"""
@@ -84,7 +85,7 @@ class ADivision( object ):
         if self.__max_soldiers == 0 or self.soldiers < self.__max_soldiers:
             self.__dis_penalty = 0
         else:
-            self.__dis_penalty = len( self.__soldiers ) / float( self.__max_soldiers )
+            self.__dis_penalty = len( self.__soldiers ) / self.__max_soldiers
 
     def __DefineAttack( self ):
         if self.__commander is None:
@@ -112,9 +113,9 @@ class ADivision( object ):
         for soldier in self.__soldiers.itervalues():
             dis += soldier.discipline.actual
         if self.__commander is not None:
-            dis = float( dis + self.__commander.discipline.actual ) / ( self.soldiers + 1 )
+            dis = ( dis + self.__commander.discipline.actual ) / ( self.soldiers + 1 )
         else:
-            dis = float( dis ) / self.soldiers
+            dis = dis / self.soldiers
         self.__discipline = round( dis, 2 ) - self.dis_penalty
 
     def __DefineArmours( self ):
@@ -125,9 +126,9 @@ class ADivision( object ):
         for soldier in self.__soldiers.itervalues():
             armours += soldier.armour 
         if self.__commander is not None:
-            armours = float( armours + self.__commander.armour ) / ( self.soldiers + 1 )
+            armours = ( armours + self.__commander.armour ) / ( self.soldiers + 1 )
         else:
-            armours = float( armours ) / self.soldiers
+            armours = armours / self.soldiers
         self.__armours = round( armours, 2 )
 
     def __DefineWeapons( self ):
@@ -138,9 +139,9 @@ class ADivision( object ):
         for soldier in self.__soldiers.itervalues():
             weapons += soldier.weapon
         if self.__commander is not None:
-            weapons = float( weapons + self.__commander.weapon ) / ( self.soldiers + 1 )
+            weapons = ( weapons + self.__commander.weapon ) / ( self.soldiers + 1 )
         else:
-            weapons = float( weapons ) / self.soldiers
+            weapons = weapons / self.soldiers
         self.__weapons = round( weapons, 2 )
 
     def __UpdateAllAttributes( self ):

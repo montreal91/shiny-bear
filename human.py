@@ -1,7 +1,8 @@
-from random import gauss
+from __future__     import division
+from random         import gauss
 
-from name   import AName
-from skill  import ASkill
+from name           import AName
+from skill          import ASkill
 
 # Genders
 MALE        = "male"
@@ -124,7 +125,7 @@ class AHuman( object ):
 
     @property 
     def average_skill( self ):
-        return float( self.discipline.actual + self.attack.actual + self.defence.actual + self.logistics.actual + self.leadership.actual ) / 5
+        return ( self.discipline.actual + self.attack.actual + self.defence.actual + self.logistics.actual + self.leadership.actual ) / 5
 
     def __Die( self ):
         self.__alive = False
