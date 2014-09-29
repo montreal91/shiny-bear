@@ -2,9 +2,17 @@ from human import AHuman
 
 class ADivision( object ):
     """docstring for ADivision"""
+    __slots__ = (
+        "__identifier",
+        "__commander", "__soldiers",
+        "__weapons", "__armours",
+        "__discipline", "__attack", "__defence", "__logistics", "__max_soldiers",
+        "__dis_penalty",
+    )
     def __init__(  self, identifier=0  ):
         super( ADivision, self ).__init__()
         self.__identifier   = identifier
+
         self.__commander    = None
         self.__soldiers     = {}
 
