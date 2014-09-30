@@ -170,12 +170,14 @@ class ADivision( object ):
 
     def AddOneSoldier( self, new_soldier ):
         assert type( new_soldier ) == AHuman
+        assert new_soldier.identifier not in self.__soldiers
         self.__soldiers[ new_soldier.identifier ] = new_soldier
         self.__UpdateAllAttributes()
 
     def AddManySoldiers( self, new_soldiers ):
         for soldier in new_soldiers:
             assert type( soldier ) == AHuman
+            assert soldier.identifier not in self.__soldiers
             self.__soldiers[ soldier.identifier ] = soldier
         self.__UpdateAllAttributes()
 

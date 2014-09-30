@@ -67,6 +67,8 @@ class ADivisionTestCase( TestCase ):
         div.AddOneSoldier( sol )
         with self.assertRaises( AssertionError ):
             div.AddOneSoldier( 9000 )
+        with self.assertRaises( AssertionError ):
+            div.AddOneSoldier(sol)
         self.assertTrue( div.soldiers        == 1 )
         self.assertTrue( div.weapons         == 5 )
         self.assertTrue( div.armours         == 4 )
@@ -99,6 +101,8 @@ class ADivisionTestCase( TestCase ):
         self.assertTrue( div.dis_penalty   == 0 )
         self.assertTrue( div.weapons       == 5.44 )
         self.assertTrue( div.armours       == 3.51 )
+        with self.assertRaises( AssertionError ):
+            div.AddManySoldiers(soldiers)
         div.SetCommander(cap)
         self.assertTrue( div.discipline     == 8.22 )
         self.assertTrue( div.attack         == 14 )
