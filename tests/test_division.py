@@ -1,10 +1,10 @@
 # coding: utf-8
 
-from unittest   import TestCase
-from random     import seed, randint
+from unittest       import TestCase
+from random         import seed, randint
 
-from division   import ADivision
-from human      import *
+from core.division  import ADivision
+from core.human     import *
 
 class ADivisionTestCase( TestCase ):
     def setUp( self ):

@@ -3,8 +3,8 @@
 from unittest   import TestCase
 from random     import seed
 
-from name       import AName
-from human      import *
+from core.name  import AName
+from core.human import *
 
 class AHumanTestCase( TestCase ):
     def setUp( self ):

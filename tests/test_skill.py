@@ -3,7 +3,7 @@
 from unittest   import TestCase
 from random     import seed, random
 
-from skill      import ASkill
+from core.skill import ASkill
 
 class ASkillTestCase( TestCase ):
     def setUp( self ):

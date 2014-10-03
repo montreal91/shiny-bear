@@ -1,11 +1,11 @@
 # coding: utf-8
 
-from unittest   import TestCase
-from random     import seed
+from unittest       import TestCase
+from random         import seed
 
-from human      import AHuman, DISCIPLINE
-from division   import ADivision
-from army       import AnArmy
+from core.human     import AHuman, DISCIPLINE
+from core.division  import ADivision
+from core.army      import AnArmy
 
 class AnArmyTestCase( TestCase ):
     def setUp( self ):
