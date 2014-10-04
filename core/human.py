@@ -3,23 +3,9 @@ from random         import gauss
 
 from name           import AName
 from skill          import ASkill
-
-# Genders
-MALE        = "male"
-FEMALE      = "female"
-
-# Ranks
-RECRUIT     = 0
-SOLDIER     = 1
-CAPTAIN     = 2
-GENERAL     = 3
-
-# Skills
-DISCIPLINE  = "dis"
-ATTACK      = "att"
-DEFENCE     = "def"
-LOGISTICS   = "log"
-LEADERSHIP  = "lead"
+from code_constants import MALE, FEMALE # Genders
+from code_constants import RECRUIT, SOLDIER, CAPTAIN, GENERAL # Ranks
+from code_constants import DISCIPLINE, ATTACK, DEFENCE, LOGISTICS, LEADERSHIP # Skills
 
 class AHuman( object ):
     """docstring for AHuman"""

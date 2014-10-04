@@ -1,10 +1,13 @@
 # coding: utf-8
 
-from unittest   import TestCase
-from random     import seed
+from unittest               import TestCase
+from random                 import seed
 
-from core.name  import AName
-from core.human import *
+from core.name              import AName
+from core.human             import AHuman
+from core.code_constants    import FEMALE, MALE
+from core.code_constants    import DISCIPLINE, ATTACK, DEFENCE, LOGISTICS, LEADERSHIP 
+from core.code_constants    import RECRUIT, SOLDIER, CAPTAIN, GENERAL
 
 class AHumanTestCase( TestCase ):
     def setUp( self ):
