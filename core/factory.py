@@ -9,7 +9,7 @@ class AFactory( AnAbstractBuilding ):
     """docstring for AFactory"""
     __slots__ = (
         "__specialization",
-        "__tech_level", "__prod_level".
+        "__tech_level", "__prod_level",
         "__productivity", "__efficiency", "__cost",
         "__production",
     )
@@ -53,20 +53,20 @@ class AFactory( AnAbstractBuilding ):
 
     def __UpdateCost( self ):
         # 2, 1 and 100 are gameplay constants
-        self.__cost = ( 2 ** ( self.__prod_level - 1 ) * 100 ) / self.__efficiency 
+        cost = ( 2 ** ( self.__prod_level - 1 ) * 100 ) / self.__efficiency # ??? 
+        self.__cost = round( cost, 2 )
     
     def UpgradeProductivity( self ):
-        self.__productivity += 0.1
+        self.__productivity += 0.1 #gp_const
 
     def UpgradeEfficiency( self ):
-        self.__efficiency += 1
+        self.__efficiency += 1 #gp_const
         self.__UpdateCost()
 
     def UpgradeTechLevel( self ):
-        self.__tech_level   += 1
+        self.__tech_level   += 1 
         self.__efficiency   = 1
-        self.__productivity = 1
-        self.__UpdateCost()
+        self.__productivity = 1.0
 
     def DowngradeTechLevel( self ):
         if self.__tech_level > 1:
@@ -74,12 +74,13 @@ class AFactory( AnAbstractBuilding ):
 
     def SetProdLevel( self, level ):
         level = int( level )
-        if level - self.__tech_level > 5: # 5 is a gameplay constant
+        if level - self.__tech_level > 5: # 5 is a gameplay constant and questionable
             self.__prod_level = self.__tech_level + 5 
         elif level < 1:
             self.__prod_level = 1
         else:
             self.__prod_level = level
+        self.__UpdateCost()
 
     def Produce( self ):
         production = int( self.__productivity * 100 ) # 100 is a gameplay constant
@@ -96,8 +97,9 @@ class AFactory( AnAbstractBuilding ):
             if quantity <= 0:
                 return 0
             elif quantity > self.__production[ prod_level ]:
+                amount = self.__production[ prod_level ]
                 self.__production[ prod_level ] = 0
-                return self.__production[ prod_level ]
+                return amount
             else:
                 self.__production[ prod_level ] -= quantity
                 return quantity
@@ -105,6 +107,7 @@ class AFactory( AnAbstractBuilding ):
             return 0
 
     def PutProduction( self, prod_level, quantity ):
+        assert prod_level > 0 and quantity > 0
         prod_level  = int( prod_level )
         quantity    = int( quantity )
         if prod_level in self.__production:
