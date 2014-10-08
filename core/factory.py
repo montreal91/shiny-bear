@@ -10,7 +10,7 @@ class AFactory( AnAbstractBuilding ):
     __slots__ = (
         "__specialization",
         "__tech_level", "__prod_level",
-        "__productivity", "__efficiency", "__cost",
+        "__productivity", "__efficiency", "__product_price",
         "__production",
     )
     def __init__( self, specialization ):
@@ -23,7 +23,7 @@ class AFactory( AnAbstractBuilding ):
 
         self.__productivity     = 1.0
         self.__efficiency       = 1
-        self.__cost             = 100 # per one piece of production
+        self.__product_price    = 100 # per one piece of production
         
         self.__production       = {}
 
@@ -48,20 +48,20 @@ class AFactory( AnAbstractBuilding ):
         return self.__prod_level
 
     @property 
-    def cost( self ):
-        return self.__cost
+    def product_price( self ):
+        return self.__product_price
 
-    def __UpdateCost( self ):
+    def __UpdateProductPrice( self ):
         # 2, 1 and 100 are gameplay constants
-        cost = ( 2 ** ( self.__prod_level - 1 ) * 100 ) / self.__efficiency # ??? 
-        self.__cost = round( cost, 2 )
+        price = ( 2 ** ( self.__prod_level - 1 ) * 100 ) / self.__efficiency # ??? 
+        self.__product_price = round( price , 2 )
     
     def UpgradeProductivity( self ):
         self.__productivity += 0.1 #gp_const
 
     def UpgradeEfficiency( self ):
         self.__efficiency += 1 #gp_const
-        self.__UpdateCost()
+        self.__UpdateProductPrice()
 
     def UpgradeTechLevel( self ):
         self.__tech_level   += 1 
@@ -80,7 +80,7 @@ class AFactory( AnAbstractBuilding ):
             self.__prod_level = 1
         else:
             self.__prod_level = level
-        self.__UpdateCost()
+        self.__UpdateProductPrice()
 
     def Produce( self ):
         production = int( self.__productivity * 100 ) # 100 is a gameplay constant
@@ -88,7 +88,7 @@ class AFactory( AnAbstractBuilding ):
             self.__production[ self.__prod_level ] += production
         else:
             self.__production[ self.__prod_level ] = production
-        return round( production * self.__cost, 2 )
+        return round( production * self.__product_price, 2 )
 
     def GetProduction( self, prod_level, quantity ):
         prod_level  = int( prod_level )
