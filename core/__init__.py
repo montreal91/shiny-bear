@@ -7,12 +7,17 @@ from human          import AHuman
 
 class AnAbstractBuilding( object ):
     """docstring for AnAbstractBuilding"""
-    __slots__       = ( "__complexity", "__cost", "__progress" )
-    def __init__( self, complexity=1, cost=1 ):
+    __slots__       = ( "__identifier", "__complexity", "__cost", "__progress" )
+    def __init__( self, identifier=0, complexity=1, cost=1 ):
         super( AnAbstractBuilding, self ).__init__()
+        self.__identifier   = identifier
         self.__cost         = cost
         self.__complexity   = complexity
         self.__progress     = 0 # Takes values from 0 to 1
+
+    @property 
+    def identifier( self ):
+        return self.__identifier
 
     @property 
     def complexity( self ):

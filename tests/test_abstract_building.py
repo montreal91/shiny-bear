@@ -10,11 +10,13 @@ class AnAbstractBuildingTestCase( TestCase ):
         self.assertEqual(   building1.cost, 1 )
         self.assertEqual(   building1.complexity, 1 )
         self.assertEqual(   building1.progress, 0 )
+        self.assertEqual( building1.identifier, 0)
 
-        building2 = AnAbstractBuilding( complexity=10, cost=9000 )
+        building2 = AnAbstractBuilding( identifier=9000, complexity=10, cost=9000 )
         self.assertEqual( building2.cost, 9000 )
         self.assertEqual( building2.complexity, 10 )
         self.assertEqual( building2.progress, 0 )
+        self.assertEqual( building2.identifier, 9000)
 
     def test_build( self ):
         building = AnAbstractBuilding( complexity=10 )
