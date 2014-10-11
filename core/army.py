@@ -1,4 +1,7 @@
+# coding: utf-8
+
 from __future__     import division
+
 from human          import AHuman
 from division       import ADivision
 from code_constants import PRECISION

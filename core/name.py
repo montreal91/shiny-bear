@@ -1,3 +1,5 @@
+# coding: utf-8
+
 class AName( object ):
     """docstring for AName"""
     __slots__ = ( "__first_name", "__second_name", "__last_name" )
