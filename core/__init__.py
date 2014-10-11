@@ -44,11 +44,11 @@ class AnAbstractSchool( AnAbstractBuilding ):
     """docstring for AnAbstractSchool"""
     __slots__ = (
         "__max_students", "__education_price",
-        "__students", "__graduates"
+        "__students", "__graduates", "__overall_graduates"
     )
-    def __init__( self ):
-        super( AnAbstractSchool, self ).__init__()
-        self.__max_students     = 0 # const
+    def __init__( self, **kwargs ):
+        super( AnAbstractSchool, self ).__init__( **kwargs )
+        self.__max_students     = 0 # const 
         self.__education_price  = 5 # const
 
         self.__students         = {}
@@ -65,7 +65,7 @@ class AnAbstractSchool( AnAbstractBuilding ):
         return len(self.__students)
 
     @property 
-    def education_cost( self ):
+    def education_price( self ):
         return self.__education_price
 
     @property 
@@ -107,13 +107,13 @@ class AnAbstractSchool( AnAbstractBuilding ):
         else:
             return students
 
-    def RemoveOneGraduate( self, graduate_id ):
+    def TakeOneGraduate( self, graduate_id ):
         if graduate_id in self.__graduates:
             return self.__graduates.pop( graduate_id )
         else:
             return None
 
-    def RemoveAllGraduates( self ):
+    def TakeAllGraduates( self ):
         graduates           = list( self.__graduates.itervalues() )
         self.__graduates    = {}
         if len(graduates) == 0:
