@@ -1,5 +1,7 @@
 # coding: utf-8
 
+PRECISION   = 2
+
 WEAPONS     = "weapons"
 ARMOURS     = "armours"
 

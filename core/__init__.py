@@ -4,6 +4,7 @@ from __future__     import division
 from math           import modf
 
 from human          import AHuman
+from code_constants import PRECISION
 
 class AnAbstractBuilding( object ):
     """docstring for AnAbstractBuilding"""
@@ -29,7 +30,7 @@ class AnAbstractBuilding( object ):
 
     @property 
     def progress( self ):
-        return round( self.__progress * 100, 2 )
+        return round( self.__progress * 100, PRECISION )
 
     def Build( self, building_modules ):
         self.__progress += building_modules / self.__complexity

@@ -1,6 +1,7 @@
-from __future__ import division
-from human      import AHuman
-from division   import ADivision
+from __future__     import division
+from human          import AHuman
+from division       import ADivision
+from code_constants import PRECISION
 
 class AnArmy( object ):
     """docstring for AnArmy"""
@@ -100,10 +101,10 @@ class AnArmy( object ):
                 weapons += division.weapons
             if self.__commander is not None:
                 weapons += self.__commander.weapon
-                weapons /= (self.divisions + 1)
+                weapons /= ( self.divisions + 1 )
             else:
                 weapons /= self.divisions
-            self.__weapons = round( weapons, 2 )
+            self.__weapons = round( weapons, PRECISION )
         elif self.__commander is not None:
             self.__weapons = self.__commander.weapon
         else:
@@ -116,10 +117,10 @@ class AnArmy( object ):
                 armours += division.armours
             if self.__commander is not None:
                 armours += self.__commander.armour
-                armours /= (self.divisions + 1)
+                armours /= ( self.divisions + 1 )
             else:
                 armours /= self.divisions
-            self.__armours = round( armours, 2 )
+            self.__armours = round( armours, PRECISION )
         elif self.__commander is not None:
             self.__armours = self.__commander.armour
         else:
@@ -148,7 +149,7 @@ class AnArmy( object ):
                 discipline += division.discipline
             discipline /= self.divisions
             discipline = discipline * self.__commander.discipline.actual - self.__dis_penalty #???
-            self.__discipline = round( discipline, 2)
+            self.__discipline = round( discipline, PRECISION )
 
     def __DefineAttack( self ):
         if self.__commander is None:
@@ -161,7 +162,7 @@ class AnArmy( object ):
                 attack += division.attack
             attack /= self.divisions
             attack = attack * self.__commander.attack.actual #???
-            self.__attack = round(attack, 2)
+            self.__attack = round( attack, PRECISION )
 
     def __DefineDefence( self ):
         if self.__commander is None:
@@ -174,7 +175,7 @@ class AnArmy( object ):
                 defence += division.defence
             defence /= self.divisions
             defence = defence * self.__commander.defence.actual #???
-            self.__defence = round(defence, 2)
+            self.__defence = round( defence, PRECISION )
 
     def __DefineLogistics( self ):
         if self.__commander is None:
@@ -187,7 +188,7 @@ class AnArmy( object ):
                 logistics += division.logistics
             logistics /= self.divisions
             logistics = logistics * self.__commander.logistics.actual #???
-            self.__logistics = round(logistics, 2)
+            self.__logistics = round( logistics, PRECISION )
 
     def __UpdateAllAttributes( self ):
         self.__DefineStrength()

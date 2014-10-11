@@ -3,7 +3,7 @@
 from __future__     import division
 
 from .              import AnAbstractBuilding
-from code_constants import WEAPONS, ARMOURS
+from code_constants import WEAPONS, ARMOURS, PRECISION
 
 class AFactory( AnAbstractBuilding ):
     """docstring for AFactory"""
@@ -54,7 +54,7 @@ class AFactory( AnAbstractBuilding ):
     def __UpdateProductPrice( self ):
         # 2, 1 and 100 are gameplay constants
         price = ( 2 ** ( self.__prod_level - 1 ) * 100 ) / self.__efficiency # ??? 
-        self.__product_price = round( price , 2 )
+        self.__product_price = round( price , PRECISION )
     
     def UpgradeProductivity( self ):
         self.__productivity += 0.1 #gp_const
@@ -88,7 +88,7 @@ class AFactory( AnAbstractBuilding ):
             self.__production[ self.__prod_level ] += production
         else:
             self.__production[ self.__prod_level ] = production
-        return round( production * self.__product_price, 2 )
+        return round( production * self.__product_price, PRECISION )
 
     def GetProduction( self, prod_level, quantity ):
         prod_level  = int( prod_level )

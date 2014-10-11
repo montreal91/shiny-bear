@@ -1,5 +1,6 @@
-from __future__ import division
-from human      import AHuman
+from __future__     import division
+from human          import AHuman
+from code_constants import PRECISION
 
 class ADivision( object ):
     """docstring for ADivision"""
@@ -116,7 +117,7 @@ class ADivision( object ):
             dis = ( dis + self.__commander.discipline.actual ) / ( self.soldiers + 1 )
         else:
             dis = dis / self.soldiers
-        self.__discipline = round( dis, 2 ) - self.dis_penalty
+        self.__discipline = round( dis, PRECISION ) - self.dis_penalty
 
     def __DefineArmours( self ):
         if self.soldiers == 0 and self.__commander is None:
@@ -129,7 +130,7 @@ class ADivision( object ):
             armours = ( armours + self.__commander.armour ) / ( self.soldiers + 1 )
         else:
             armours = armours / self.soldiers
-        self.__armours = round( armours, 2 )
+        self.__armours = round( armours, PRECISION )
 
     def __DefineWeapons( self ):
         if self.soldiers == 0 and self.__commander is None:
@@ -142,7 +143,7 @@ class ADivision( object ):
             weapons = ( weapons + self.__commander.weapon ) / ( self.soldiers + 1 )
         else:
             weapons = weapons / self.soldiers
-        self.__weapons = round( weapons, 2 )
+        self.__weapons = round( weapons, PRECISION )
 
     def __UpdateAllAttributes( self ):
         self.__DefineWeapons()
