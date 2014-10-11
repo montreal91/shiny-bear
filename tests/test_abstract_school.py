@@ -2,8 +2,9 @@
 
 from unittest   import TestCase
 
-from core import AnAbstractSchool
+from core       import AnAbstractSchool
 from core.human import AHuman
+from core.army  import AnArmy
 
 class AnAbstractSchoolTestCase( TestCase ):
     def test_constructor( self ):
@@ -11,23 +12,28 @@ class AnAbstractSchoolTestCase( TestCase ):
         self.assertEqual( school.complexity, 10 )
         self.assertEqual( school.cost, 2000 )
 
-        self.assertEqual( school.max_students, 0 )
+        self.assertEqual( school.capacity, 100 )
         self.assertEqual( school.educating_students, 0 )
         self.assertEqual( school.education_price, 5 )
         self.assertEqual( school.current_graduates, 0 )
         self.assertEqual( school.overall_graduates, 0 )
 
     def test_add_remove_one_student( self ):
-        school = AnAbstractSchool()
-        student = AHuman( identifier=3 )
+        school      = AnAbstractSchool()
+        student     = AHuman( identifier=3 )
         school.AddOneStudent( student )
         self.assertEqual( school.educating_students, 1 )
         self.assertEqual( school.RemoveOneStudent( 2 ), None )
         self.assertEqual( school.RemoveOneStudent( 3 ), student )
         self.assertEqual( school.RemoveOneStudent( 3 ), None )
         self.assertEqual( school.educating_students, 0 )
-        with self.assertRaises( AssertionError ):
-            school.AddOneStudent( 1984 )
+
+        school.AddOneStudent( 1984 )
+        self.assertEqual( school.educating_students, 0 )
+
+        not_student = AnArmy()
+        school.AddOneStudent( not_student )
+        self.assertEqual( school.educating_students, 0 )
 
     def test_add_remove_many_students( self ):
         school      = AnAbstractSchool()
@@ -43,3 +49,8 @@ class AnAbstractSchoolTestCase( TestCase ):
         students    = school.RemoveAllStudents()
         self.assertEqual( len( students ), 30 )
         self.assertEqual( school.educating_students, 0 )
+
+        entrants3   = [ AHuman( identifier=i ) for i in xrange( 1, 120 )]
+        school.AddManyStudents( entrants3 )
+        self.assertEqual( school.educating_students, 100 )
+        self.assertEqual( school.educating_students, school.capacity )

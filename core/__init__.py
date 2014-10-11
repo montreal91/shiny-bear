@@ -48,22 +48,22 @@ class AnAbstractBuilding( object ):
 class AnAbstractSchool( AnAbstractBuilding ):
     """docstring for AnAbstractSchool"""
     __slots__ = (
-        "__max_students", "__education_price",
+        "__capacity", "__education_price",
         "__students", "__graduates", "__overall_graduates"
     )
-    def __init__( self, **kwargs ):
+    def __init__( self, capacity=100, **kwargs ):
         super( AnAbstractSchool, self ).__init__( **kwargs )
-        self.__max_students     = 0 # const 
-        self.__education_price  = 5 # const
+        self.__capacity             = capacity  # const 
+        self.__education_price      = 5         # const
 
-        self.__students         = {}
-        self.__graduates        = {}
+        self.__students             = {}
+        self.__graduates            = {}
 
-        self.__overall_graduates = 0
+        self.__overall_graduates    = 0
 
     @property 
-    def max_students( self ):
-        return self.__max_students
+    def capacity( self ):
+        return self.__capacity
 
     @property 
     def educating_students( self ):
@@ -86,20 +86,30 @@ class AnAbstractSchool( AnAbstractBuilding ):
         self.__graduates[ graduate.identifier ] = graduate
         self.__overall_graduates += 1
 
+    def __AddStudentCondition( self, new_student ):
+        try:
+            is_human                = type( new_student ) == AHuman
+            not_already_educating   = new_student.identifier not in self.__students
+            school_is_not_full      = len(self.__students) < self.__capacity
+            return is_human and not_already_educating and school_is_not_full
+        except:
+            return False
+
     def AddOneStudent( self, new_student ):
-        assert type( new_student ) == AHuman
-        assert new_student.identifier not in self.__students
-        self.__students[ new_student.identifier ] = new_student
+        if self.__AddStudentCondition( new_student ) is True:
+            self.__students[ new_student.identifier ] = new_student
+        else:
+            pass
 
     def RemoveOneStudent( self, student_id ):
         if student_id in self.__students:
-            return self.__students.pop(student_id)
+            return self.__students.pop( student_id )
         else:
             return None
 
     def AddManyStudents( self, new_students_list ):
         for student in new_students_list:
-            if type( student ) == AHuman and student.identifier not in self.__students:
+            if self.__AddStudentCondition( student ) is True:
                 self.__students[ student.identifier ] = student
             else:
                 pass
