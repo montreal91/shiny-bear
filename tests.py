@@ -10,6 +10,7 @@ from tests.test_human               import AHumanTestCase
 from tests.test_division            import ADivisionTestCase
 from tests.test_army                import AnArmyTestCase
 from tests.test_factory             import AFactoryTestCase
+from tests.test_soldier_school      import ASoldierSchoolTestCase
 
 if __name__ == '__main__':
     unittest.main()

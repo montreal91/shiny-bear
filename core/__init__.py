@@ -50,14 +50,14 @@ class AnAbstractSchool( AnAbstractBuilding ):
     """docstring for AnAbstractSchool"""
     __slots__ = (
         "__capacity", "__education_price",
-        "__students", "__graduates", "__overall_graduates"
+        "_students", "__graduates", "__overall_graduates"
     )
     def __init__( self, capacity=100, **kwargs ):
         super( AnAbstractSchool, self ).__init__( **kwargs )
         self.__capacity             = capacity  # const 
         self.__education_price      = 5         # const
 
-        self.__students             = {}
+        self._students              = {}
         self.__graduates            = {}
 
         self.__overall_graduates    = 0
@@ -68,7 +68,7 @@ class AnAbstractSchool( AnAbstractBuilding ):
 
     @property 
     def educating_students( self ):
-        return len(self.__students)
+        return len(self._students)
 
     @property 
     def education_price( self ):
@@ -82,42 +82,42 @@ class AnAbstractSchool( AnAbstractBuilding ):
     def overall_graduates( self ):
         return self.__overall_graduates
 
-    def __Graduate( self, student_id ):
-        graduate                                = self.__students.pop( student_id )
+    def _Graduate( self, student_id ):
+        graduate                                = self._students.pop( student_id )
         self.__graduates[ graduate.identifier ] = graduate
         self.__overall_graduates += 1
 
     def __AddStudentCondition( self, new_student ):
         try:
             is_human                = type( new_student ) == AHuman
-            not_already_educating   = new_student.identifier not in self.__students
-            school_is_not_full      = len(self.__students) < self.__capacity
+            not_already_educating   = new_student.identifier not in self._students
+            school_is_not_full      = len(self._students) < self.__capacity
             return is_human and not_already_educating and school_is_not_full
         except:
             return False
 
     def AddOneStudent( self, new_student ):
         if self.__AddStudentCondition( new_student ) is True:
-            self.__students[ new_student.identifier ] = new_student
+            self._students[ new_student.identifier ] = new_student
         else:
             pass
 
     def RemoveOneStudent( self, student_id ):
-        if student_id in self.__students:
-            return self.__students.pop( student_id )
+        if student_id in self._students:
+            return self._students.pop( student_id )
         else:
             return None
 
     def AddManyStudents( self, new_students_list ):
         for student in new_students_list:
             if self.__AddStudentCondition( student ) is True:
-                self.__students[ student.identifier ] = student
+                self._students[ student.identifier ] = student
             else:
                 pass
 
     def RemoveAllStudents( self ):
-        students        = list( self.__students.itervalues() )
-        self.__students = {}
+        students        = list( self._students.itervalues() )
+        self._students = {}
         if len( students ) == 0:
             return None
         else:
