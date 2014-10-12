@@ -11,6 +11,7 @@ from tests.test_division            import ADivisionTestCase
 from tests.test_army                import AnArmyTestCase
 from tests.test_factory             import AFactoryTestCase
 from tests.test_soldier_school      import ASoldierSchoolTestCase
+from tests.test_military_university import AMilitaryUniversityTestCase
 
 if __name__ == '__main__':
     unittest.main()

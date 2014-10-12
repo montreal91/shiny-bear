@@ -12,14 +12,14 @@ class AMilitaryUniversity( AnAbstractSchool ):
         attack      = student.attack.actual == student.attack.maximum
         defence     = student.defence.actual == student.defence.maximum
         logistics   = student.logistics.actual == student.logistics.maximum
-        leadership  = student.leadership.actual == student.logistics.maximum
+        leadership  = student.leadership.actual == student.leadership.maximum
         return discipline and attack and defence and logistics and leadership
     
     def __FilterOutGraduatedStudents( self ):
         students_dict = self._students.copy()
         for student in students_dict.itervalues():
             if self.__ConditionOfGraduating( student ) is True:
-                self._Graduate(student.idetifier)
+                self._Graduate( student.identifier )
             else:
                 pass
 
