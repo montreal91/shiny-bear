@@ -1,16 +1,18 @@
 # coding: utf-8
 
-from random import gauss, randint
+from random         import gauss, randint
+
+from game_constants import SKILL
 
 class ASkill( object ):
     """docstring for ASkill"""
-    __slots__ = ( "__talent", "__actual", "__maximum")
+    __slots__ = ( "__talent", "__actual", "__maximum" )
     def __init__( self ):
         super( ASkill, self ).__init__()
-        self.__talent   = round( gauss( 2, 1 ) )
+        self.__talent   = round( gauss( SKILL[ "TALENT_MU" ], SKILL[ "TALENT_SIGMA" ] ) )
         if self.__talent <= 0:
             self.__talent = randint( 1, 2 )
-        self.__maximum  = round( gauss( 15, 5 ) )
+        self.__maximum  = round( gauss( SKILL[ "MAXIMUM_MU" ], SKILL[ "MAXIMUM_SIGMA" ] ) )
         if self.__maximum <= 0:
             self.__maximum = randint( 1, 9 )
         self.__actual    = 0

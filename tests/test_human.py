@@ -5,7 +5,8 @@ from random                 import seed
 
 from core.name              import AName
 from core.human             import AHuman
-from core.code_constants    import FEMALE, MALE
+
+from core.game_constants    import GENDERS
 from core.code_constants    import DISCIPLINE, ATTACK, DEFENCE, LOGISTICS, LEADERSHIP 
 from core.code_constants    import RECRUIT, SOLDIER, CAPTAIN, GENERAL
 
@@ -19,7 +20,7 @@ class AHumanTestCase( TestCase ):
         self.assertTrue( human1.short_name      == "G. R. Fawkes" )
         self.assertTrue( human1.identifier      == 0 )
         self.assertTrue( human1.age             == 0) 
-        self.assertTrue( human1.gender          == MALE )
+        self.assertTrue( human1.gender          == GENDERS[ "MALE" ] )
         self.assertTrue( human1.health          == 100 )
         self.assertTrue( human1.alive   is True )
         self.assertTrue( human1.valid   is True )
@@ -30,12 +31,12 @@ class AHumanTestCase( TestCase ):
         self.assertTrue( human1.rank            == None )
 
         name    = AName( first_name="Ada", second_name="King", last_name="Lovelace" )
-        human2  = AHuman( name=name, identifier=1815, gender=FEMALE )
+        human2  = AHuman( name=name, identifier=1815, gender=GENDERS[ "FEMALE" ] )
         self.assertTrue( human2.full_name       == "LOVELACE Ada King" )
         self.assertTrue( human2.short_name      == "A. K. Lovelace" )
         self.assertTrue( human2.identifier      == 1815 )
         self.assertTrue( human2.age             == 0 )
-        self.assertTrue( human2.gender          == FEMALE )
+        self.assertTrue( human2.gender          == GENDERS[ "FEMALE" ] )
         self.assertTrue( human2.health          == 100 )
         self.assertTrue( human2.alive   is True )
         self.assertTrue( human2.wounded is False )

@@ -2,12 +2,6 @@
 
 PRECISION   = 2
 
-WEAPONS     = "weapons"
-ARMOURS     = "armours"
-
-MALE        = "male"
-FEMALE      = "female"
-
 RECRUIT     = 0
 SOLDIER     = 1
 CAPTAIN     = 2

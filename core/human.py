@@ -5,7 +5,7 @@ from random         import gauss
 
 from name           import AName
 from skill          import ASkill
-from code_constants import MALE, FEMALE # Genders
+from game_constants import GENDERS, HUMAN
 from code_constants import RECRUIT, SOLDIER, CAPTAIN, GENERAL # Ranks
 from code_constants import DISCIPLINE, ATTACK, DEFENCE, LOGISTICS, LEADERSHIP # Skills
 
@@ -18,15 +18,15 @@ class AHuman( object ):
         "__discipline", "__attack", "__defence", "__logistics", "__leadership", 
         "__rank"
     )
-    def __init__( self, name=AName(), identifier=0, gender=MALE ):
+    def __init__( self, name=AName(), identifier=0, gender=GENDERS[ "MALE" ] ):
         super( AHuman, self ).__init__()
         self.__identifier   = identifier
         self.__name         = name
         self.__gender       = gender 
 
         self.__age          = 0
-        self.__max_age      = round( gauss( 65, 5 ) )
-        self.__health       = 100
+        self.__max_age      = round( gauss( HUMAN[ "GAUSS_MU" ], HUMAN[ "GAUSS_SIGMA" ] ) )
+        self.__health       = HUMAN[ "MAX_HEALTH" ]
         self.__alive        = True
         self.__valid        = True
 
@@ -57,7 +57,7 @@ class AHuman( object ):
 
     @property 
     def short_name( self ):
-        return self.__name.initials[0] + ". " + self.__name.initials[1] + ". " + self.__name.last_name
+        return self.__name.initials[ 0 ] + ". " + self.__name.initials[ 1 ] + ". " + self.__name.last_name
 
     @property 
     def age( self ):
@@ -105,7 +105,7 @@ class AHuman( object ):
 
     @property 
     def wounded( self ):
-        return self.__health != 100
+        return self.__health != HUMAN[ "MAX_HEALTH" ]
 
     @property 
     def health( self ):
@@ -120,8 +120,10 @@ class AHuman( object ):
         self.__valid = False
 
     def __CheckValidity( self ):
-        if self.__health < 50:
+        if self.__health < HUMAN[ "VALIDITY_FACTOR" ]:
             self.__valid = False
+        else:
+            self.__valid = True
 
     def AgeUp( self ):
         if self.__alive is True:
@@ -137,8 +139,8 @@ class AHuman( object ):
 
     def Heal( self, hit_points ):
         self.__health += hit_points
-        if self.__health > 100:
-            self.__health = 100
+        if self.__health > HUMAN[ "MAX_HEALTH" ]:
+            self.__health = HUMAN[ "MAX_HEALTH" ]
 
     def SetArmour( self, armour ):
         armour = int(armour)

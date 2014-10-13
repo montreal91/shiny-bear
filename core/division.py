@@ -4,6 +4,7 @@ from __future__     import division
 
 from human          import AHuman
 from code_constants import PRECISION
+from game_constants import DIVISION
 
 class ADivision( object ):
     """docstring for ADivision"""
@@ -83,7 +84,7 @@ class ADivision( object ):
         if self.__commander is None:
             self.__max_soldiers = 0
         else:
-            self.__max_soldiers = self.__commander.leadership.actual * 5
+            self.__max_soldiers = self.__commander.leadership.actual * DIVISION[ "COMMANDER_LEADERSHIP_FACTOR" ]
 
     def __DefineDisPenalty( self ):
         if self.__max_soldiers == 0 or self.soldiers < self.__max_soldiers:

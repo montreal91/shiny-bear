@@ -3,7 +3,9 @@
 from __future__     import division
 
 from .              import AnAbstractBuilding
-from code_constants import WEAPONS, ARMOURS, PRECISION
+
+from code_constants import PRECISION
+from game_constants import SPECIALIZATIONS, FACTORY
 
 class AFactory( AnAbstractBuilding ):
     """docstring for AFactory"""
@@ -15,15 +17,15 @@ class AFactory( AnAbstractBuilding ):
     )
     def __init__( self, specialization ):
         super( AFactory, self ).__init__( complexity=25, cost=9000 )
-        assert specialization == WEAPONS or specialization == ARMOURS
+        assert specialization in SPECIALIZATIONS.itervalues()
         self.__specialization   = specialization
 
-        self.__tech_level       = 1
-        self.__prod_level       = 1
+        self.__tech_level       = FACTORY[ "DEFAULT_TECH_LEVEL" ]
+        self.__prod_level       = FACTORY[ "DEFAULT_PROD_LEVEL" ]
 
-        self.__productivity     = 1.0
-        self.__efficiency       = 1
-        self.__product_price    = 100 # per one piece of production
+        self.__productivity     = FACTORY[ "DEFAULT_PRODUCTIVITY" ]
+        self.__efficiency       = FACTORY[ "DEFAULT_EFFICIENCY" ]
+        self.__product_price    = FACTORY[ "PRODUCT_PRICE" ] # per one piece of production
         
         self.__production       = {}
 
@@ -52,38 +54,37 @@ class AFactory( AnAbstractBuilding ):
         return self.__product_price
 
     def __UpdateProductPrice( self ):
-        # 2, 1 and 100 are gameplay constants
-        price = ( 2 ** ( self.__prod_level - 1 ) * 100 ) / self.__efficiency # ??? 
+        price = ( FACTORY[ "EXPONENT" ] ** ( self.__prod_level - FACTORY[ "DEFAULT_PROD_LEVEL" ] ) * FACTORY[ "PRICE_FACTOR" ] ) / self.__efficiency # ??? 
         self.__product_price = round( price , PRECISION )
     
     def UpgradeProductivity( self ):
-        self.__productivity += 0.1 #gp_const
+        self.__productivity += FACTORY[ "PRODUCTIVITY_GROWTH_FACTOR" ]
 
     def UpgradeEfficiency( self ):
-        self.__efficiency += 1 #gp_const
+        self.__efficiency += FACTORY[ "EFFICIENCY_GROWTH_FACTOR" ]
         self.__UpdateProductPrice()
 
     def UpgradeTechLevel( self ):
-        self.__tech_level   += 1 
-        self.__efficiency   = 1
-        self.__productivity = 1.0
+        self.__tech_level   += FACTORY[ "TECH_LEVEL_GROWTH_FACTOR" ]
+        self.__efficiency   = FACTORY[ "DEFAULT_EFFICIENCY" ]
+        self.__productivity = FACTORY[ "DEFAULT_PRODUCTIVITY" ]
 
     def DowngradeTechLevel( self ):
-        if self.__tech_level > 1:
-            self.__tech_level -= 1
+        if self.__tech_level > FACTORY[ "DEFAULT_TECH_LEVEL" ]:
+            self.__tech_level -= FACTORY[ "TECH_LEVEL_GROWTH_FACTOR" ]
 
     def SetProdLevel( self, level ):
         level = int( level )
-        if level - self.__tech_level > 5: # 5 is a gameplay constant and questionable
+        if level - self.__tech_level > 5: # ???
             self.__prod_level = self.__tech_level + 5 
-        elif level < 1:
-            self.__prod_level = 1
+        elif level < FACTORY[ "DEFAULT_PROD_LEVEL" ]:
+            self.__prod_level = FACTORY[ "DEFAULT_PROD_LEVEL" ]
         else:
             self.__prod_level = level
         self.__UpdateProductPrice()
 
     def Produce( self ):
-        production = int( self.__productivity * 100 ) # 100 is a gameplay constant
+        production = int( self.__productivity * FACTORY[ "PRODUCTIVITY_FACTOR" ] )
         if self.__prod_level in self.__production:
             self.__production[ self.__prod_level ] += production
         else:

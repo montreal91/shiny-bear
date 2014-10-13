@@ -4,22 +4,23 @@ from unittest               import TestCase
 
 from core.factory           import AFactory
 from core                   import AnAbstractBuilding
-from core.code_constants    import WEAPONS, ARMOURS
+
+from core.game_constants    import SPECIALIZATIONS
 
 class AFactoryTestCase( TestCase ):
     def test_constructor( self ):
-        factory1 = AFactory( WEAPONS )
+        factory1 = AFactory( SPECIALIZATIONS[ "WEAPONS" ] )
         self.assertEquals( factory1.complexity, 25 )
         self.assertEquals( factory1.cost, 9000 )
-        self.assertEquals( factory1.specialization, WEAPONS )
+        self.assertEquals( factory1.specialization, SPECIALIZATIONS[ "WEAPONS" ] )
         self.assertEquals( factory1.tech_level, 1 )
         self.assertEquals( factory1.prod_level, 1 )
         self.assertEquals( factory1.productivity, 1.0 )
         self.assertEquals( factory1.efficiency, 1 )
         self.assertEquals( factory1.product_price, 100 )
 
-        factory2 = AFactory( ARMOURS )
-        self.assertEquals( factory2.specialization, ARMOURS )
+        factory2 = AFactory( SPECIALIZATIONS[ "ARMOURS" ] )
+        self.assertEquals( factory2.specialization, SPECIALIZATIONS[ "ARMOURS" ] )
         self.assertEquals( factory2.tech_level, 1 )
         self.assertEquals( factory2.prod_level, 1 )
         self.assertEquals( factory2.productivity, 1.0 )
@@ -32,14 +33,14 @@ class AFactoryTestCase( TestCase ):
             factory3 = AFactory()
 
     def test_upgrade_productivity( self ):
-        factory = AFactory( ARMOURS )
+        factory = AFactory( SPECIALIZATIONS[ "ARMOURS" ] )
         self.assertEquals( factory.productivity, 1 )
         factory.UpgradeProductivity()
         self.assertEquals( factory.productivity, 1.1 )
         self.assertEquals( factory.product_price, 100 )
 
     def test_upgrade_efficiency( self ):
-        factory = AFactory( WEAPONS )
+        factory = AFactory( SPECIALIZATIONS[ "WEAPONS" ] )
         self.assertEquals( factory.efficiency, 1)
         self.assertEquals( factory.product_price, 100 )
 
@@ -52,7 +53,7 @@ class AFactoryTestCase( TestCase ):
         self.assertEquals(factory.product_price, 33.33)
 
     def test_upgrade_downgrade_tech_level( self ):
-        factory = AFactory( ARMOURS )
+        factory = AFactory( SPECIALIZATIONS[ "ARMOURS" ] )
         self.assertEquals( factory.efficiency, 1 )
         self.assertEquals( factory.productivity, 1 )
         self.assertEquals( factory.tech_level, 1 )
@@ -80,7 +81,7 @@ class AFactoryTestCase( TestCase ):
         self.assertEquals( factory.tech_level, 2 )
 
     def test_set_prod_level( self ):
-        factory = AFactory( WEAPONS )
+        factory = AFactory( SPECIALIZATIONS[ "WEAPONS" ] )
 
         factory.SetProdLevel( 2 )
         self.assertEquals( factory.prod_level, 2 )
@@ -99,7 +100,7 @@ class AFactoryTestCase( TestCase ):
         self.assertEquals( factory.product_price, 800 )
 
     def test_produce( self ):
-        factory = AFactory( ARMOURS )
+        factory = AFactory( SPECIALIZATIONS[ "ARMOURS" ] )
         self.assertEquals( factory.Produce(), 10000 )
 
         for i in range( 5 ):
@@ -115,7 +116,7 @@ class AFactoryTestCase( TestCase ):
         self.assertEquals( factory.Produce(), 1137778 )
 
     def test_get_put_production( self ):
-        factory = AFactory( WEAPONS )
+        factory = AFactory( SPECIALIZATIONS[ "WEAPONS" ] )
         factory.PutProduction( 1, 110 )
         self.assertEquals( factory.GetProduction( 1, 50 ), 50 )
         self.assertEquals( factory.GetProduction( 1, 50 ), 50 )
