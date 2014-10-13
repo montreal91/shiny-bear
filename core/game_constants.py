@@ -49,6 +49,6 @@ SKILL           = {
 
 WAREHOUSE       = {
     "CAPACITY_FACTOR"       : 100,
-    "increase_CAPACITY_COST": 1000,
-    "decrease_capacity_cost": 500,
+    "INCREASE_CAPACITY_COST": 1000,
+    "DECREASE_CAPACITY_COST": 500,
 }
