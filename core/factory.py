@@ -3,6 +3,7 @@
 from __future__     import division
 
 from .              import AnAbstractBuilding
+from .warehouse     import AWarehouse
 
 from code_constants import PRECISION
 from game_constants import SPECIALIZATIONS, FACTORY
@@ -13,10 +14,10 @@ class AFactory( AnAbstractBuilding ):
         "__specialization",
         "__tech_level", "__prod_level",
         "__productivity", "__efficiency", "__product_price",
-        "__production",
+        "__storage",
     )
-    def __init__( self, specialization ):
-        super( AFactory, self ).__init__( complexity=25, cost=9000 )
+    def __init__( self, specialization, **kwargs ):
+        super( AFactory, self ).__init__( **kwargs )
         assert specialization in SPECIALIZATIONS.itervalues()
         self.__specialization   = specialization
 
@@ -27,7 +28,7 @@ class AFactory( AnAbstractBuilding ):
         self.__efficiency       = FACTORY[ "DEFAULT_EFFICIENCY" ]
         self.__product_price    = FACTORY[ "PRODUCT_PRICE" ] # per one piece of production
         
-        self.__production       = {}
+        self.__storage          = AWarehouse( specialization=self.__specialization, capacity=FACTORY[ "DEFAULT_STORAGE_CAPACITY" ] )
 
     @property 
     def tech_level( self ):
@@ -52,6 +53,14 @@ class AFactory( AnAbstractBuilding ):
     @property 
     def product_price( self ):
         return self.__product_price
+
+    @property
+    def amount( self ):
+        return self.__storage.amount
+
+    @property 
+    def capacity( self ):
+        return self.__storage.capacity
 
     def __UpdateProductPrice( self ):
         price = ( FACTORY[ "EXPONENT" ] ** ( self.__prod_level - FACTORY[ "DEFAULT_PROD_LEVEL" ] ) * FACTORY[ "PRICE_FACTOR" ] ) / self.__efficiency # ??? 
@@ -85,33 +94,11 @@ class AFactory( AnAbstractBuilding ):
 
     def Produce( self ):
         production = int( self.__productivity * FACTORY[ "PRODUCTIVITY_FACTOR" ] )
-        if self.__prod_level in self.__production:
-            self.__production[ self.__prod_level ] += production
-        else:
-            self.__production[ self.__prod_level ] = production
+        self.__storage.PutItems( items_level=self.__prod_level, number_of_items=production )
         return round( production * self.__product_price, PRECISION )
 
-    def GetProduction( self, prod_level, quantity ):
-        prod_level  = int( prod_level )
-        quantity    = int( quantity )
-        if prod_level in self.__production:
-            if quantity <= 0:
-                return 0
-            elif quantity > self.__production[ prod_level ]:
-                amount = self.__production[ prod_level ]
-                self.__production[ prod_level ] = 0
-                return amount
-            else:
-                self.__production[ prod_level ] -= quantity
-                return quantity
-        else:
-            return 0
-
-    def PutProduction( self, prod_level, quantity ):
-        assert prod_level > 0 and quantity > 0
-        prod_level  = int( prod_level )
-        quantity    = int( quantity )
-        if prod_level in self.__production:
-            self.__production[ prod_level ] += quantity
-        else:
-            self.__production[ prod_level ] = quantity
+    def TakeProduction( self, prod_level=0, number_of_items=0, all_items=False ):
+        prod_level      = int( prod_level )
+        number_of_items = int( number_of_items )
+        all_items       = bool( all_items )
+        return self.__storage.TakeItems( items_level=prod_level, number_of_items=number_of_items, all_items=all_items )

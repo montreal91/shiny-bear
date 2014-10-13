@@ -16,6 +16,7 @@ FACTORY         = {
     "DEFAULT_PROD_LEVEL"        : 1,
     "DEFAULT_PRODUCTIVITY"      : 1.0,
     "DEFAULT_EFFICIENCY"        : 1,
+    "DEFAULT_STORAGE_CAPACITY"  : 1000,
 
     "EXPONENT"                  : 2,
     "PRICE_FACTOR"              : 100,
