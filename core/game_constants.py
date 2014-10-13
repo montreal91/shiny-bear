@@ -46,3 +46,9 @@ SKILL           = {
     "MAXIMUM_MU"    : 15,
     "MAXIMUM_SIGMA" : 5,
 }
+
+WAREHOUSE       = {
+    "CAPACITY_FACTOR"       : 100,
+    "increase_CAPACITY_COST": 1000,
+    "decrease_capacity_cost": 500,
+}
