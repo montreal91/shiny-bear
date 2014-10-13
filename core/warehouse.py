@@ -56,26 +56,18 @@ class AWarehouse( AnAbstractBuilding ):
             self.__Put( items_level, number_of_items )
             return 0
 
-    def TakeSomeItems( self, items_level=0, number_of_items=0 ):
+    def TakeItems( self, items_level=0, number_of_items=0, all_items=False ):
         items_level     = int( items_level )
         number_of_items = int( number_of_items )
-        if number_of_items <= 0 or items_level not in self.__storage:
+        if number_of_items < 0 or items_level not in self.__storage:
             # If number_of_items is an invalid value
             # Or if this warehouse never stored such items
             return 0
-        elif number_of_items > self.__storage[ items_level ]:
+        elif all_items or number_of_items > self.__storage[ items_level ]:
             items                           = self.__storage[ items_level ]
             self.__storage[ items_level ]   = 0
             return items
         else:
             self.__storage[ items_level ] -= number_of_items
             return number_of_items
-
-    def TakeAllItems( self, items_level=0 ):
-        items_level = int( items_level )
-        if items_level in self.__storage:
-            items                           = self.__storage[ items_level ]
-            self.__storage[ items_level ]   = 0
-            return items
-        else:
-            return 0
+            
