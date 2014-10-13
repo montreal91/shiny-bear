@@ -6,6 +6,7 @@ from game_constants import SPECIALIZATIONS, WAREHOUSE
 
 class AWarehouse( AnAbstractBuilding ):
     """docstring for AWarehouse"""
+    __slots__ = ( "__storage", "__capacity", "__specialization" )
     def __init__( self, specialization=SPECIALIZATIONS[ "WEAPONS" ], capacity=100, **kwargs ):
         super( AWarehouse, self ).__init__( **kwargs )
         assert specialization in SPECIALIZATIONS.itervalues()
