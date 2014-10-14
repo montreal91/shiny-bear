@@ -13,6 +13,7 @@ from tests.test_factory             import AFactoryTestCase
 from tests.test_soldier_school      import ASoldierSchoolTestCase
 from tests.test_military_university import AMilitaryUniversityTestCase
 from tests.test_warehouse           import AWarehouseTestCase
+from tests.test_construction_yard   import AConstructionYardTestCase
 
 if __name__ == '__main__':
     unittest.main()

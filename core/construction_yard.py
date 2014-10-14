@@ -23,7 +23,7 @@ class AConstructionYard( object ):
             slot                                = AStruct()
             slot.building                       = building
             slot.b_modules                      = b_modules
-            self.__yard[building.identifier]    = slot
+            self.__yard[ building.identifier ]  = slot
         else:
             pass
 
@@ -32,15 +32,16 @@ class AConstructionYard( object ):
             slot = self.__yard.pop( building_id )
             return slot.b_modules
         else:
-            return None
+            return 0
 
     def AddBuildingModulesToBuilding( self, building_id=0, b_modules=0 ):
-        if building_id in self.__yard:
+        b_modules = int( b_modules )
+        if building_id in self.__yard and b_modules > 0:
             self.__yard[ building_id ].b_modules += b_modules
         else:
             pass
 
-    def TakeBuildingModulesFromBuilding( self, building_id=0, b_modules=0, all_modules=True ):
+    def TakeBuildingModulesFromBuilding( self, building_id=0, b_modules=0, all_modules=False ):
         b_modules = int( b_modules )
         if building_id not in self.__yard or b_modules < 0:
             return 0
