@@ -151,7 +151,11 @@ class ACounter( object ):
 
     def Next( self ):
         self.__counter += 1
+        return self.__counter
 
     def DropCounter( self ):
-        self.__counter = 0 
+        self.__counter = 0
+
+class AStruct:
+    pass
         
