@@ -1,6 +1,7 @@
 # coding: utf-8
 
-from helpers import AStruct
+from helpers        import AStruct
+from code_constants import STATUS_CODES
 
 class AConstructionYard( object ):
     """docstring for AConstructionYard"""
@@ -24,8 +25,9 @@ class AConstructionYard( object ):
             slot.building                       = building
             slot.b_modules                      = b_modules
             self.__yard[ building.identifier ]  = slot
+            return STATUS_CODES.SUCCESS
         else:
-            pass
+            return STATUS_CODES.FAILURE
 
     def RemoveBuilding( self, building_id=0 ):
         if building_id in self.__yard:
@@ -38,8 +40,9 @@ class AConstructionYard( object ):
         b_modules = int( b_modules )
         if building_id in self.__yard and b_modules > 0:
             self.__yard[ building_id ].b_modules += b_modules
+            return STATUS_CODES.SUCCESS
         else:
-            pass
+            return STATUS_CODES.FAILURE
 
     def TakeBuildingModulesFromBuilding( self, building_id=0, b_modules=0, all_modules=False ):
         b_modules = int( b_modules )
