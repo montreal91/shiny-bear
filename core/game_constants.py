@@ -1,5 +1,7 @@
 # coding: utf-8
 
+from helpers import AStruct
+
 SPECIALIZATIONS = {
     "WEAPONS": "weapons",
     "ARMOURS": "armours"
@@ -53,3 +55,31 @@ WAREHOUSE       = {
     "INCREASE_CAPACITY_COST": 1000,
     "DECREASE_CAPACITY_COST": 500,
 }
+
+BUILDINGS                                   = AStruct()
+
+BUILDINGS.FACTORY                           = AStruct()
+BUILDINGS.FACTORY.COST                      = 100000
+BUILDINGS.FACTORY.COMPLEXITY                = 50
+BUILDINGS.FACTORY.VERBOSE_NAME              = "factory"
+BUILDINGS.FACTORY.SHORT_NAME                = "fc"
+
+BUILDINGS.MILITARY_UNIVERSITY               = AStruct()
+BUILDINGS.MILITARY_UNIVERSITY.COST          = 10000
+BUILDINGS.MILITARY_UNIVERSITY.COMPLEXITY    = 10
+BUILDINGS.MILITARY_UNIVERSITY.VERBOSE_NAME  = "military university"
+BUILDINGS.MILITARY_UNIVERSITY.SHORT_NAME    = "mu"
+
+BUILDINGS.SOLDIER_SCHOOL                    = AStruct()
+BUILDINGS.SOLDIER_SCHOOL.COST               = 5000
+BUILDINGS.SOLDIER_SCHOOL.COMPLEXITY         = 15
+BUILDINGS.SOLDIER_SCHOOL.VERBOSE_NAME       = "soldier school"
+BUILDINGS.SOLDIER_SCHOOL.SHORT_NAME         = "ss"
+
+BUILDINGS.WAREHOUSE                         = AStruct()
+BUILDINGS.WAREHOUSE.COST                    = 1000
+BUILDINGS.WAREHOUSE.COMPLEXITY              = 5
+BUILDINGS.WAREHOUSE.VERBOSE_NAME            = "warehouse"
+BUILDINGS.WAREHOUSE.SHORT_NAME              = "wh"
+
+BUILDING_MODULE_PRICE                       = 500
