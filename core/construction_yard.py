@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from . import AStruct
+from helpers import AStruct
 
 class AConstructionYard( object ):
     """docstring for AConstructionYard"""
