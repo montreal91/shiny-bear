@@ -59,7 +59,7 @@ class AConstructionYard( object ):
                 modules         = slot.b_modules
                 slot.b_modules  = 0
                 return modules
-            elif b_modules < slot.b_modules:
+            elif b_modules <= slot.b_modules:
                 slot.b_modules -= b_modules
                 return b_modules
             else:

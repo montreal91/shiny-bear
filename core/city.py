@@ -1,5 +1,7 @@
 # coding: utf-8
 
+from collections            import OrderedDict
+
 from helpers                import ACounter
 from construction_yard      import AConstructionYard
 
@@ -20,7 +22,7 @@ class ACity( object ):
         self.__buildings_counter    = ACounter()
         
         self.__building_modules     = 0
-        self.__buildings            = {}
+        self.__buildings            = OrderedDict()
         self.__construction_yard    = AConstructionYard()
 
     @property
@@ -87,7 +89,7 @@ class ACity( object ):
         out                     = self.__construction_yard.PopReadyBuildings()
         self.__building_modules += out.b_modules
         for building in out.buildings:
-            self.__buildings[ building_id ] = building
+            self.__buildings[ building.identifier ] = building
     
     def BuyBuildingModules( self, number=0 ):
         number = int( number )
@@ -155,3 +157,4 @@ class ACity( object ):
 
     def ActivateConstructionYard( self ):
         self.__construction_yard.Construct()
+        self.__SetInOperation()
