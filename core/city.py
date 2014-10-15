@@ -30,6 +30,7 @@ class ACity( object ):
     @property
     def title( self ):
         return self.__title
+
     @title.setter
     def title(self, new_title):
         if type(new_title) == str:
@@ -126,7 +127,9 @@ class ACity( object ):
         return building.cost
 
     def AbortConstruction( self, building_id ):
-        self.__building_modules += self.__construction_yard.RemoveBuilding( building_id )
+        res = self.__construction_yard.RemoveBuilding( building_id )
+        self.__building_modules += res.b_modules
+        return res.remainder
 
     def AddBuildingModulesToBuilding( self, building_id=0, b_modules=0, all_modules=False ):
         b_modules = int( b_modules )
@@ -141,12 +144,13 @@ class ACity( object ):
             result = self.__construction_yard.AddBuildingModulesToBuilding( building_id, b_modules )
             if result == STATUS_CODES.SUCCESS:
                 self.__building_modules -= b_modules
+                return STATUS_CODES.SUCCESS
             else:
                 return STATUS_CODES.FAILURE
 
     def ReduceBuildingModulesAtBuilding( self, building_id=0, b_modules=0, all_modules=False ):
-        b_modules = int( b_modules )
-        modules = self.__construction_yard.TakeBuildingModulesFromBuilding( building_id=building_id, b_modules=b_modules, all_modules=all_modules )
+        b_modules   = int( b_modules )
+        modules     = self.__construction_yard.TakeBuildingModulesFromBuilding( building_id=building_id, b_modules=b_modules, all_modules=all_modules )
         self.__building_modules += modules
 
     def ActivateConstructionYard( self ):

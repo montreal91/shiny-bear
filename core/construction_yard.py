@@ -30,11 +30,16 @@ class AConstructionYard( object ):
             return STATUS_CODES.FAILURE
 
     def RemoveBuilding( self, building_id=0 ):
+        result = AStruct()
         if building_id in self.__yard:
             slot = self.__yard.pop( building_id )
-            return slot.b_modules
+            result.b_modules = slot.b_modules
+            result.remainder = slot.building.cost * ( ( 100 - slot.building.progress) / 100 )
+            result.remainder = int( round( result.remainder ) )
         else:
-            return 0
+            result.b_modules = 0
+            result.remainder = 0
+        return result
 
     def AddBuildingModulesToBuilding( self, building_id=0, b_modules=0 ):
         b_modules = int( b_modules )

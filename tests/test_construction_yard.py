@@ -13,7 +13,7 @@ class AConstructionYardTestCase( TestCase ):
 
     def test_add_remove_building( self ):
         yard        = AConstructionYard()
-        buildings   = [ AnAbstractBuilding( identifier=i, complexity=( i * 10 ) ) for i in xrange( 1, 4 ) ]
+        buildings   = [ AnAbstractBuilding( identifier=i, complexity=( i * 10 ), cost=100 ) for i in xrange( 1, 4 ) ]
         yard.AddBuilding( buildings[ 0 ] )
         self.assertEqual( yard.busy_building_modules, 0 )
         self.assertEqual( yard.buildings_under_construction, 1 )
@@ -30,21 +30,37 @@ class AConstructionYardTestCase( TestCase ):
         self.assertEqual( yard.busy_building_modules, 5 )
         self.assertEqual( yard.buildings_under_construction, 3 )
 
-        self.assertEqual( yard.RemoveBuilding( 1 ), 0 )
+        for building in buildings:
+            building.Build( 10 )
+
+        res         = yard.RemoveBuilding( 0 )
+        self.assertEqual( res.remainder, 0 )
+        self.assertEqual( res.b_modules, 0 )
+        self.assertEqual( yard.busy_building_modules, 5 )
+        self.assertEqual( yard.buildings_under_construction, 3 )
+
+        res         = yard.RemoveBuilding( 1 )
+        self.assertEqual( res.remainder, 0 )
+        self.assertEqual( res.b_modules, 0 )
         self.assertEqual( yard.busy_building_modules, 5 )
         self.assertEqual( yard.buildings_under_construction, 2 )
 
-        self.assertEqual( yard.RemoveBuilding( 0 ), 0 )
-        self.assertEqual( yard.busy_building_modules, 5 )
-        self.assertEqual( yard.buildings_under_construction, 2 )
-
-        self.assertEqual( yard.RemoveBuilding( 2 ), 0 )
+        res         = yard.RemoveBuilding( 2 )
+        self.assertEqual( res.remainder, 50 )
+        self.assertEqual( res.b_modules, 0 )
         self.assertEqual( yard.busy_building_modules, 5 )
         self.assertEqual( yard.buildings_under_construction, 1 )
 
-        self.assertEqual( yard.RemoveBuilding( 3 ), 5 )
+        res         = yard.RemoveBuilding( 3 )
+        self.assertEqual( res.remainder, 67 )
+        self.assertEqual( res.b_modules, 5 )
         self.assertEqual( yard.busy_building_modules, 0 )
         self.assertEqual( yard.buildings_under_construction, 0 )
+
+        yard.AddBuilding( AnAbstractBuilding( cost=100 ) )
+        res         = yard.RemoveBuilding( 0 )
+        self.assertEqual( res.remainder, 100 )
+        self.assertEqual( res.b_modules, 0 )
 
     def test_add_take_building_modules_to_building( self ):
         yard        = AConstructionYard()
