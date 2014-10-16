@@ -15,6 +15,7 @@ from tests.test_military_university import AMilitaryUniversityTestCase
 from tests.test_warehouse           import AWarehouseTestCase
 from tests.test_construction_yard   import AConstructionYardTestCase
 from tests.test_city                import ACityTestCase
+from tests.test_citizen             import ACitizenTestCase
 
 if __name__ == '__main__':
     unittest.main()
