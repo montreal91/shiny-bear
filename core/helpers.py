@@ -1,5 +1,7 @@
 # coding utf-8
 
+import random
+
 class AStruct:
     pass
 
@@ -21,3 +23,7 @@ class ACounter( object ):
 
     def DropCounter( self ):
         self.__counter = 0
+
+def LoadedToss( probability ):
+    toss = random.randint( 0, 99 )
+    return toss < probability

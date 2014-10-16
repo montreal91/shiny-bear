@@ -83,3 +83,11 @@ BUILDINGS.WAREHOUSE.VERBOSE_NAME            = "warehouse"
 BUILDINGS.WAREHOUSE.SHORT_NAME              = "wh"
 
 BUILDING_MODULE_PRICE                       = 500
+
+CITIZEN                                     = AStruct()
+CITIZEN.PREGNANCY_PROBABILITY               = 8 # %
+CITIZEN.CHILDBEARING_AGE                    = AStruct()
+CITIZEN.CHILDBEARING_AGE.LOWER              = 15
+CITIZEN.CHILDBEARING_AGE.UPPER              = 50
+CITIZEN.AVERAGE_AGE                         = 65 # Gauss mu
+CITIZEN.AGE_VARIETY                         = 5 # Gauss sigma
