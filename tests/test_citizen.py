@@ -82,16 +82,16 @@ class ACitizenTestCase( TestCase ):
 
         citizen = ACitizen( gender=self.female )
         while citizen.alive:
-            if citizen.age == 22:
+            if citizen.age == 21:
                 child = citizen.GiveBirth()
                 self.assertEqual( child.age, 0 )
                 self.assertEqual( child.gender, self.male )
-                self.assertEqual( child.max_age, 58 )
+                self.assertEqual( child.max_age, 70 )
             elif citizen.age == 24:
                 child = citizen.GiveBirth()
                 self.assertEqual( child.age, 0 )
                 self.assertEqual( child.gender, self.male )
-                self.assertEqual( child.max_age, 58 )
+                self.assertEqual( child.max_age, 69 )
             elif citizen.age == 29:
                 child = citizen.GiveBirth()
                 self.assertEqual( child.age, 0 )

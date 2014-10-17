@@ -7,6 +7,7 @@ from game_constants import GENDERS, CITIZEN
 
 class ACitizen( object ):
     """docstring for ACitizen"""
+    __slots__ = ( "__age", "__gender", "__max_age")
     def __init__( self, age=0, gender=GENDERS[ "MALE" ] ):
         super( ACitizen, self ).__init__()
         self.__gender       = gender
