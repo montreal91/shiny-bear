@@ -4,13 +4,14 @@ from collections            import OrderedDict
 
 from helpers                import ACounter
 from construction_yard      import AConstructionYard
+from population             import APopulation
 
 from factory                import AFactory
 from military_university    import AMilitaryUniversity
 from soldier_school         import ASoldierSchool
 from warehouse              import AWarehouse
 
-from game_constants         import BUILDINGS, BUILDING_MODULE_PRICE
+from game_constants         import BUILDINGS, BUILDING_MODULE_PRICE, STARTING_CITY_POPULATION
 from code_constants         import STATUS_CODES
 
 class ACity( object ):
@@ -24,6 +25,8 @@ class ACity( object ):
         self.__building_modules     = 0
         self.__buildings            = OrderedDict()
         self.__construction_yard    = AConstructionYard()
+
+        self.__population           = APopulation( starting_population=STARTING_CITY_POPULATION )
 
     @property
     def identifier( self ):
@@ -54,6 +57,10 @@ class ACity( object ):
     @property
     def number_of_buildings( self ):
         return len( self.__buildings )
+
+    @property 
+    def population(self):
+        return self.__population.total_population
 
     def __CreateFactory( self, specialization ):
         return AFactory(

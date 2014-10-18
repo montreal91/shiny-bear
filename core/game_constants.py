@@ -95,3 +95,5 @@ CITIZEN.AGE_VARIETY                         = 5 # Gauss sigma
 POPULATION                                  = AStruct()
 POPULATION.GROWTH                           = 0.0221
 POPULATION.MILITARY_AGE                     = 16
+
+STARTING_CITY_POPULATION                    = 500
